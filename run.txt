@@ -1,0 +1,6 @@
+Run in terminal-
+mongod 
+
+then run-
+npm -i
+node app.js
