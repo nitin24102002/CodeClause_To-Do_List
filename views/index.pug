@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    style 
+        include css/style.css
+</head>
+<body>
+    <div class="header">
+        <h1>MY TO-DO LIST</h1>
+    </div>
+
+    <div class="container">
+        <form action="/task-add" method="post" id="inputTask">
+            <div class="formGroup">    
+                <label for="taskDescription">Task Description:</label>
+                <input type="text" id="taskDescription" name="taskDescription" required>
+            </div>
+                
+            <div class="formGroup">    
+                <label for="date">Due Date:</label>
+                <input type="date" id="dateTime" name="dateTime" required>
+            </div>
+                
+            <div class="formGroup">
+                <label for="time">Due Time:</label>
+                <select name="timeselect" id="timeselect">
+                    <option value="0">12:00am</option>
+                    <option value="1">1:00am</option>
+                    <option value="2">2:00am</option>
+                    <option value="3">3:00am</option>
+                    <option value="4">4:00am</option>
+                    <option value="5">5:00am</option>
+                    <option value="6">6:00am</option>
+                    <option value="7">7:00am</option>
+                    <option value="8">8:00am</option>
+                    <option value="9">9:00am</option>
+                    <option value="10">10:00am</option>
+                    <option value="11">11:00am</option>
+                    <option value="12">12:00pm</option>
+                    <option value="13">1:00pm</option>
+                    <option value="14">2:00pm</option>
+                    <option value="15">3:00pm</option>
+                    <option value="16">4:00pm</option>
+                    <option value="17">5:00pm</option>
+                    <option value="18">6:00pm</option>
+                    <option value="19">7:00pm</option>
+                    <option value="20">8:00pm</option>
+                    <option value="21">9:00pm</option>
+                    <option value="22">10:00pm</option>
+                    <option value="23">11:00pm</option>
+                </select>
+            </div>
+                
+            <div class="formGroup">
+                <label for="priority">Priority:</label>
+                <input type="number" id="priority" name="priority" value="1" max="9" min="1" required>
+            </div>
+        
+            <button id="addBtn" type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <div class="taskList">
+        <h2>Task to do</h2>
+        
+        <div class="dropdown">
+            <button class="dropbtn">Sort By</button>
+            <div class="dropdown-content">
+              <a href="http://localhost/sortBy-dueDate">Due Date</a>
+              <a href="http://localhost/sortBy-priority">Priority</a>
+            </div>
+        </div>
+
+        <div class="delCon">
+            <form action="deleteTask" method="get" id="delForm">
+                <button class="delBtn", id="deleteBtn", type="submit">Delete Selected</button>
+            </form>
+        </div>
+
+        <table id = 'taskTable'>
+            <tr>
+                <th style="width: 50%;">Task</th>
+                <th>Due Date</th>
+                <th>Due Time</th>
+                <th style="width:calc(100%/15)">Priority</th>
+                <th><input type="checkbox" onchange="checkAll(this)" value="all" id="selectAll" ></th>
+            </tr>
+            - 
+                var checkId = 0
+            each taskobj in taskObjs 
+                tr
+                    td.colA #{taskobj.taskDescription}
+                    td #{taskobj.dateTime}
+                    if taskobj.timeselect > 11
+                        if taskobj.timeselect == 11
+                            td #{taskobj.timeselect}:00 PM
+                        if taskobj.timeselect > 12
+                            td #{taskobj.timeselect-12}:00 PM 
+                    else 
+                        if taskobj.timeselect == 0
+                            td 12:00 AM 
+                        else
+                            td #{taskobj.timeselect}:00 AM
+                    td #{taskobj.priority}
+                    td  
+                        input(type="checkbox", id= "c" + checkId, name = "c" + checkId, value = checkId, class = "delCheckBox")
+                    -
+                        checkId++
+                    
+        </table>
+    </div>
+
+    script 
+        include ../main.js
+</body>
+</html>
